@@ -1,0 +1,128 @@
+<script setup>
+	import currency from "currency.js";
+
+	const appSettings = useAppSettings();
+	const auth = useAuth();
+	const user = userData().data;
+
+	const balance = () => {
+		return currency(user.value.balance, { symbol: "", precision: 2 });
+	};
+
+	const toggleTheme = (themeMode) => {
+		appSettings.themeMode.value = themeMode;
+		KTThemeMode.setMode(themeMode);
+	};
+</script>
+
+<template>
+	<div
+		id="kt_app_header"
+		class="app-header d-flex border-0 py-10"
+		:data-kt-sticky="false"
+		data-kt-sticky-name="app-header-sticky"
+		data-kt-sticky-offset="{default: 'false', lg: '300px'}"
+	>
+		<!--begin::Header container-->
+		<div
+			class="app-container container-fluid d-flex align-items-stretch justify-content-between"
+			id="kt_app_header_container"
+		>
+			<!--begin::Logo-->
+			<div class="d-flex d-lg-none align-items-center me-auto">
+				<NFTexLogo :classes="'h-40px ms-n3'" />
+			</div>
+
+			<div class="d-none d-lg-flex align-items-center">
+				<NFTexLogo :classes="'h-60px'" />
+			</div>
+			<!--end::Logo-->
+
+			<!--begin::Page title-->
+			<div
+				class="d-none d-lg-flexi align-items-center position-relative me-4"
+				bis_skin_checked="1"
+			>
+				<i
+					class="ki-outline ki-magnifier fs-3 position-absolute ms-3"
+				></i>
+				<input
+					type="text"
+					id="kt_filter_search_header"
+					class="form-control form-control-solid w-450px ps-10"
+					placeholder="Search"
+				/>
+			</div>
+
+			<!--end::Page title-->
+
+			<!--begin::Navbar-->
+			<div class="app-navbar flex-shrink-0" id="kt_app_aside_navbar">
+				<!--begin::Login-->
+				<div class="app-navbar-item ms-n3w">
+					<!--begin::Menu- wrapper-->
+					<button
+						@click="toggleTheme('dark')"
+						v-if="appSettings.themeMode.value === 'light'"
+						class="btn btn-icon rounded-circle btn-light-primary btn-active-light-primary"
+					>
+						<i class="ki-duotone ki-moon fs-2x">
+							<span class="path1"></span>
+							<span class="path2"></span>
+						</i>
+					</button>
+					<button
+						@click="toggleTheme('light')"
+						v-else
+						class="btn btn-icon rounded-circle btn-light-warning btn-active-light-warning"
+					>
+						<i class="ki-duotone ki-night-day fs-4x fs-md-3x">
+							<span class="path1"></span>
+							<span class="path2"></span>
+							<span class="path3"></span>
+							<span class="path4"></span>
+							<span class="path5"></span>
+							<span class="path6"></span>
+							<span class="path7"></span>
+							<span class="path8"></span>
+							<span class="path9"></span>
+							<span class="path10"></span>
+						</i>
+					</button>
+					<!--end::Menu wrapper-->
+				</div>
+				<!--end::Login-->
+
+				<!--end::Quick links-->
+			</div>
+			<!--end::Navbar-->
+
+			<!--begin::Sidebar toggle-->
+			<div
+				class="d-flex d-lg-none align-items-center me-n1 ms-3 d-none"
+				title="Show sidebar menu"
+			>
+				<button
+					class="btn btn-icon btn-icon-white btn-active-icon-white btn-active-color-white w-35px h-35px"
+					id="kt_app_sidebar_mobile_toggle"
+				>
+					<i class="ki-solid ki-burger-menu-5 fs-3x"></i>
+				</button>
+			</div>
+			<!--end::Sidebar toggle-->
+		</div>
+		<!--end::Header container-->
+	</div>
+</template>
+
+<style>
+	.glass-container {
+		background: rgba(
+			255,
+			255,
+			255,
+			0.2
+		); /* Adjust the alpha value for transparency */
+		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.9); /* Optional: Add a subtle shadow */
+	}
+</style>
