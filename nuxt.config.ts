@@ -23,7 +23,7 @@ export default defineNuxtConfig({
 		BE_API: process.env.BE_API || "https://nftex.alwaysdata.neti",
 		public: {
 			BE_API: process.env.BE_API || "https://nftex.alwaysdata.neti",
-			APP: "AnonySPaid",
+			APP: "Quiika",
 			CLOUD_NAME: "dofakovum",
 			CLOUD_KEY: "989922725678128",
 			CLOUD_SECRETE: "Vzr0P-RNm2NEtKp1-Dyib33di0E",

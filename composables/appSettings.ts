@@ -1,5 +1,6 @@
 import axios from "axios";
 import type { AppSettings } from "~/utils/interfaces/AppSettings";
+import currency from "currency.js";
 
 export const useAppSettings = () => {
 	const init: AppSettings = {
@@ -14,6 +15,20 @@ export const useAppSettings = () => {
 	const settings = useState<AppSettings>("app-settings", () => init);
 	const isPageLoading = useState("load-page", () => true);
 	const themeMode = useState("app-theme-mode", () => "light");
+
+	const getMoney = (amount: string | number) => {
+		const value = currency(amount);
+		return value.value;
+	};
+
+	const getFractionalCurrency = (amount: string | number) => {
+		const value = currency(amount);
+		return value.intValue;
+	};
+	const formatFractionalCurrency = (amount: string | number, sym = "NGN ") => {
+		const value = currency(amount, { symbol: sym });
+		return value.divide(100).format();
+	};
 
 	const load = () => {
 		const axiosConfig: any = {
@@ -36,12 +51,15 @@ export const useAppSettings = () => {
 			});
 	};
 
-	load();
+	// load();
 
 	return {
 		settings,
 		isPageLoading,
 		themeMode,
 		load,
+		getMoney,
+		getFractionalCurrency,
+		formatFractionalCurrency,
 	};
 };

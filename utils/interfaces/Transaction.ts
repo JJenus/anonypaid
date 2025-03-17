@@ -1,18 +1,41 @@
-import { Beneficiary } from "./Beneficiary";
+export enum TransactionStatus {
+	"PENDING" = "PENDING",
+	"COMPLETED" = "COMPLETED",
+	"FAILED" = "FAILED",
+	"CANCELLED" = "CANCELLED",
+} // Add other statuses as needed
 
-export interface Transaction  {
-	id: string | null | undefined,
-	senderId: string,
-	receiverId: string | undefined,
-	amount: number,
-	type: TransactionTypes,
-	notes: string | undefined,
-	beneficiary: Beneficiary,
+// interface Transaction {
+// 	id: number;
+// 	email: string;
+// 	amount: number;
+// 	currency: string;
+// 	quid?: string;
+// 	reference: string;
+// 	transactionId: string;
+// 	status: TransactionStatus;
+// 	blocked: boolean;
+// 	createdAt: string; // ISO string format (e.g., "2025-03-16T12:34:56")
+// 	updatedAt: string;
+//   }
+
+interface Transaction {
+	email: string;
+	amount: number;
+	sessionId?: string;
+	authorizationUrl?: string;
+	transactionId: string;
+	status: TransactionStatus;
+	blocked: boolean;
 }
 
-export enum TransactionTypes {
-	DEBIT = "debit",
-	CREDIT = "credit",
-	WITHDRAWAL = "withdrawal",
-	SEND = "send"
+interface TransactionResponse {
+	currency: string;
+	amount: number;
+	quid: string;
+	transactionId: string;
+	status: TransactionStatus;
+	timestamp: string; // ISO string format
 }
+
+export type { Transaction, TransactionResponse };
