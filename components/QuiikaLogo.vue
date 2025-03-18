@@ -14,7 +14,8 @@
 		},
 	});
 
-	const config = useRuntimeConfig().public;
+	const { APP } = useRuntimeConfig().public;
+	console.log(APP);
 	// const currentPage = "App";
 	// useSeoMeta({
 	// 	title: `${currentPage} - ${config.APP}`,
@@ -22,21 +23,12 @@
 </script>
 
 <template>
-	<a
-		href="/"
-		class=""
-	>
+	<a href="/" class="d-flex algin-items-center gap-3 justify-content-center">
 		<img
 			alt="Logo"
-			src="/assets/media/logos/nftex-light.png"
+			src="/assets/media/logos/nftex-logo.png"
 			:class="classes"
-			class="me-4 theme-light-show"
 		/>
-		<img
-			alt="Logo"
-			src="/assets/media/logos/nftex-dark.png"
-			:class="classes"
-			class="me-4 theme-dark-show"
-		/>
+		<span class="fw-bold fs-1 text-white mt-3">{{ APP }}</span>
 	</a>
 </template>

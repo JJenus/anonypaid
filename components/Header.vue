@@ -30,31 +30,13 @@
 		>
 			<!--begin::Logo-->
 			<div class="d-flex d-lg-none align-items-center me-auto">
-				<NFTexLogo :classes="'h-40px ms-n3'" />
+				<QuiikaLogo :classes="'h-40px ms-n3'" />
 			</div>
 
 			<div class="d-none d-lg-flex align-items-center">
-				<NFTexLogo :classes="'h-60px'" />
+				<QuiikaLogo :classes="'h-50px'" />
 			</div>
 			<!--end::Logo-->
-
-			<!--begin::Page title-->
-			<div
-				class="d-none d-lg-flexi align-items-center position-relative me-4"
-				bis_skin_checked="1"
-			>
-				<i
-					class="ki-outline ki-magnifier fs-3 position-absolute ms-3"
-				></i>
-				<input
-					type="text"
-					id="kt_filter_search_header"
-					class="form-control form-control-solid w-450px ps-10"
-					placeholder="Search"
-				/>
-			</div>
-
-			<!--end::Page title-->
 
 			<!--begin::Navbar-->
 			<div class="app-navbar flex-shrink-0" id="kt_app_aside_navbar">
@@ -62,9 +44,8 @@
 				<div class="app-navbar-item ms-n3w">
 					<!--begin::Menu- wrapper-->
 					<button
-						@click="toggleTheme('dark')"
-						v-if="appSettings.themeMode.value === 'light'"
-						class="btn btn-icon rounded-circle btn-light-primary btn-active-light-primary"
+						@click="toggleTheme('light')"
+						class="btn btn-icon theme-dark-show rounded-circle btn-light-primary btn-active-light-primary"
 					>
 						<i class="ki-duotone ki-moon fs-2x">
 							<span class="path1"></span>
@@ -72,9 +53,8 @@
 						</i>
 					</button>
 					<button
-						@click="toggleTheme('light')"
-						v-else
-						class="btn btn-icon rounded-circle btn-light-warning btn-active-light-warning"
+						@click="toggleTheme('dark')"
+						class="btn btn-icon theme-light-show rounded-circle btn-light-warning btn-active-light-warning"
 					>
 						<i class="ki-duotone ki-night-day fs-4x fs-md-3x">
 							<span class="path1"></span>

@@ -198,7 +198,7 @@
 			>
 				<!--begin::Card-->
 				<div class="d-flex justify-content-center w-100">
-					<NFTexLogo :classes="'h-30px'" />
+					QuiikaLogo :classes="'h-30px'" />
 				</div>
 				<!--end::Card-->
 			</div>

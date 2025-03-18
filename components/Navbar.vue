@@ -25,7 +25,7 @@
 </script>
 
 <template>
-	<div class="d-none">
+	<div class="d-nonei">
 		<div class="hover-scroll-x hide-scrollbar">
 			<ul
 				class="nav nav-tabs nav-pills d-flex flex-nowrap align-items-center justify-content-center border-0 fs-6 min-w-lg-200px"
@@ -36,7 +36,7 @@
 					@click="active = nav.name"
 				>
 					<NuxtLink
-						class="nav-link text-center btn w-100px btn-light-primary btn-sm"
+						class="nav-link text-center w-100px btn-light-primary btn-sm"
 						:class="
 							active == nav.name.toLowerCase() ? 'active' : ''
 						"

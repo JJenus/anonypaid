@@ -58,7 +58,7 @@
 					<div class="card-body py-15 py-lg-20">
 						<!--begin::Logo-->
 						<div class="mb-14">
-							<NFTexLogo />
+							QuiikaLogo />
 						</div>
 						<!--end::Logo-->
 

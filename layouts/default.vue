@@ -60,7 +60,7 @@
 								<div
 ]									class="mb-3 container"
 								>
-									<Navbar />
+									<!-- <Navbar /> -->
 								</div>
 
 								<!--begin::Content container-->

@@ -20,6 +20,7 @@ export enum TransactionStatus {
 //   }
 
 interface Transaction {
+	quid: string;
 	email: string;
 	amount: number;
 	sessionId?: string;

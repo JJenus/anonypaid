@@ -139,242 +139,235 @@
 	};
 
 	onMounted(() => {
-		// toggleBlock();
+		toggleBlock();
 	});
 </script>
 
 <template>
-	<div class="container-fluid">
-		<div class="text-center mb-5">
+	<div>
+		<div class="text-centeri mb-5 ps-10 ps-md-12">
 			<h1 class="display-6">
-				<span class="text-success">Gift</span> anonymously
+				<span class="text-success">Gift</span> easy
 			</h1>
 			<h6 class="text-muted">Be anonymous.</h6>
 		</div>
 		<!--begin::Card-->
-		<div class="d-flex justify-content-center">
+		<div
+			id="tokenize-form"
+			class="card card-custom bg-light-successi border-0 h-md-100 mb-5 mb-lg-10"
+		>
+			<!--begin::Body-->
 			<div
-				id="tokenize-form"
-				class="card card-custom bg-light-success border-0 h-md-100 mb-5 mb-lg-10"
+				v-if="showForm"
+				class="card-body d-flex align-items-center justify-content-center flex-wrap ps-xl-15 pe-0"
 			>
-				<!--begin::Body-->
-				<div
-					v-if="showForm"
-					class="card-body d-flex align-items-center justify-content-center flex-wrap ps-xl-15 pe-0"
-				>
-					<!--begin::Wrapper-->
-					<div class="flex-grow-1 mt-2 me-9 me-md-6 mb-8">
-						<div
-							class="position-relative text-gray-800 fs-2 z-index-2 fw-bold mb-5"
-						>
-							Send With Ease
-						</div>
-
-						<form @submit.prevent="send" class="h-100">
-							<div class="mb-5">
-								<label
-									for="amount"
-									class="form-label required fw-bold"
-								>
-									Amount
-								</label>
-
-								<cleave
-									type="text"
-									name="amount"
-									class="form-control form-control-solid form-control-lg text-centeri fw-bold"
-									:options="{
-										numeral: true,
-										numeralThousandsGroupStyle: 'thousand',
-										numeralDecimalMark: '.', // Specifies the decimal mark
-										numeralDecimalScale: 2, // Allows up to 8 decimal places
-										numeralIntegerScale: 15, // Adjust as needed (max integer length)
-									}"
-									:class="
-										checkAmount()
-											? 'border-danger border-3 is-invalid'
-											: ''
-									"
-									placeholder="Enter amount"
-									v-model="amount"
-								/>
-							</div>
-							<div class="mb-5">
-								<label
-									for="email"
-									class="form-label required fw-bold"
-								>
-									Email
-								</label>
-								<input
-									type="email"
-									id="email"
-									name="email"
-									v-model="email"
-									class="form-control form-control-solid form-control-lg"
-								/>
-							</div>
-							<button
-								:disabled="loader.initiating"
-								class="btn btn-primary w-100"
-							>
-								<span v-if="!loader.initiating"> Proceed </span>
-								<span v-else>
-									Please wait...
-									<span
-										class="spinner-border spinner-border-sm"
-									></span>
-								</span>
-							</button>
-						</form>
-					</div>
-					<!--begin::Wrapper-->
-
-					<!--begin::Illustration-->
-					<img
-						src="/assets/media/illustrations/misc/credit-card.png"
-						class="h-175px me-15"
-						alt=""
-					/>
-					<!--end::Illustration-->
-				</div>
-				<!--end::Body-->
-
-				<div
-					v-else-if="transactionResponse"
-					class="card-body min-w-500px"
-				>
+				<!--begin::Wrapper-->
+				<div class="flex-grow-1 mt-2 me-9 me-md-6 mb-8">
 					<div
-						class="d-print-none border border-dashed border-gray-300 card-rounded h-lg-100 min-w-md-350px p-9 bg-lighten"
-						bis_skin_checked="1"
+						class="position-relative text-gray-800 fs-2 z-index-2 fw-bold mb-5"
 					>
-						<!--begin::Labels-->
-						<div class="mb-8">
-							<span
+						Send With Ease
+					</div>
+
+					<form @submit.prevent="send" class="h-100">
+						<div class="mb-5">
+							<label
+								for="amount"
+								class="form-label required fw-bold"
+							>
+								Amount
+							</label>
+
+							<cleave
+								type="text"
+								name="amount"
+								class="form-control form-control-solidi form-control-lg text-centeri fw-bold"
+								:options="{
+									numeral: true,
+									numeralThousandsGroupStyle: 'thousand',
+									numeralDecimalMark: '.', // Specifies the decimal mark
+									numeralDecimalScale: 2, // Allows up to 8 decimal places
+									numeralIntegerScale: 15, // Adjust as needed (max integer length)
+								}"
 								:class="
-									'badge-' +
-									statusColor(transactionResponse.status)
+									checkAmount()
+										? 'border-danger border-3 is-invalid'
+										: ''
 								"
-								class="badge me-2"
-								>{{ transactionResponse.status }}</span
-							>
+								placeholder="Enter amount"
+								v-model="amount"
+							/>
 						</div>
-						<!--end::Labels-->
-
-						<!--begin::Title-->
-						<h6
-							class="mb-8 fw-bolder text-capitalize text-gray-600 text-hover-primary"
+						<div class="mb-5">
+							<label
+								for="email"
+								class="form-label required fw-bold"
+							>
+								Email
+							</label>
+							<input
+								type="email"
+								id="email"
+								name="email"
+								v-model="email"
+								class="form-control form-control-solidi form-control-lg"
+							/>
+						</div>
+						<button
+							:disabled="loader.initiating"
+							class="btn btn-primary w-100"
 						>
-							TRANSACTION DETAILS
-						</h6>
-						<!--end::Title-->
-
-						<!--begin::Item-->
-						<div class="mb-6" bis_skin_checked="1">
-							<div
-								class="fw-semibold text-gray-600 fs-7"
-								bis_skin_checked="1"
-							>
-								Amount:
-							</div>
-
-							<div
-								class="fw-bold text-gray-800 fs-6"
-								bis_skin_checked="1"
-							>
-								{{ transactionResponse.currency }}
-								{{
-									formatFractionalCurrency(
-										transactionResponse.amount,
-										""
-									)
-								}}
-							</div>
-						</div>
-						<!--end::Item-->
-
-						<!--begin::Item-->
-						<div class="mb-6" bis_skin_checked="1">
-							<div
-								class="fw-semibold text-gray-600 fs-7"
-								bis_skin_checked="1"
-							>
-								QUID:
-							</div>
-
-							<div
-								class="fw-bold text-gray-800 fs-6"
-								bis_skin_checked="1"
-							>
-								{{ transactionResponse.quid }}
-							</div>
-						</div>
-						<!--end::Item-->
-
-						<div class="mb-6" bis_skin_checked="1">
-							<div
-								class="fw-semibold text-gray-600 fs-7"
-								bis_skin_checked="1"
-							>
-								Transaction ID:
-							</div>
-
-							<div
-								class="fw-bold fs-6 text-gray-800 d-flex align-items-center"
-								bis_skin_checked="1"
-							>
-								{{ transactionResponse.transactionId }}
-							</div>
-						</div>
-
-						<!--begin::Item-->
-						<div class="mb-15" bis_skin_checked="1">
-							<div
-								class="fw-semibold text-gray-600 fs-7"
-								bis_skin_checked="1"
-							>
-								Transaction Date:
-							</div>
-
-							<div
-								class="fw-bold fs-6 text-gray-800 d-flex align-items-center"
-								bis_skin_checked="1"
-							>
-								{{ transactionResponse.timestamp }}
-
+							<span v-if="!loader.initiating"> Proceed </span>
+							<span v-else>
+								Please wait...
 								<span
-									class="fs-7 text-success d-flex align-items-center"
-								>
-									<span
-										class="bullet bullet-dot bg-danger mx-2"
-									></span>
+									class="spinner-border spinner-border-sm"
+								></span>
+							</span>
+						</button>
+					</form>
+				</div>
+				<!--begin::Wrapper-->
 
-									{{
-										moment(
-											transactionResponse.timestamp
-										).fromNow()
-									}}
-								</span>
-							</div>
-						</div>
-						<!--end::Item-->
+				<!--begin::Illustration-->
+				<img
+					src="/assets/media/illustrations/misc/credit-card.png"
+					class="h-175px me-15"
+					alt=""
+				/>
+				<!--end::Illustration-->
+			</div>
+			<!--end::Body-->
 
-						<!--begin::Title-->
-						<h6
-							class="mb-2 fw-bolder text-gray-600 text-hover-primary"
+			<div v-else-if="transactionResponse" class="card-body min-w-500px">
+				<div
+					class="d-print-none border border-dashed border-gray-300 card-rounded h-lg-100 min-w-md-350px p-9 bg-lighten"
+					bis_skin_checked="1"
+				>
+					<!--begin::Labels-->
+					<div class="mb-8">
+						<span
+							:class="
+								'badge-' +
+								statusColor(transactionResponse.status)
+							"
+							class="badge me-2"
+							>{{ transactionResponse.status }}</span
 						>
-							Seamlessly withdraw access funds with the Quiika Pay
-							Unique ID (QUID)
-						</h6>
-						<!--end::Title-->
+					</div>
+					<!--end::Labels-->
+
+					<!--begin::Title-->
+					<h6
+						class="mb-8 fw-bolder text-capitalize text-gray-600 text-hover-primary"
+					>
+						TRANSACTION DETAILS
+					</h6>
+					<!--end::Title-->
+
+					<!--begin::Item-->
+					<div class="mb-6" bis_skin_checked="1">
 						<div
-							class="fw-bold fs-6 text-gray-800"
+							class="fw-semibold text-gray-600 fs-7"
 							bis_skin_checked="1"
 						>
-							<a href="#" class="link-primary ps-1"
-								>Withdraw to local bank account</a
-							>
+							Amount:
 						</div>
+
+						<div
+							class="fw-bold text-gray-800 fs-6"
+							bis_skin_checked="1"
+						>
+							{{ transactionResponse.currency }}
+							{{
+								formatFractionalCurrency(
+									transactionResponse.amount,
+									""
+								)
+							}}
+						</div>
+					</div>
+					<!--end::Item-->
+
+					<!--begin::Item-->
+					<div class="mb-6" bis_skin_checked="1">
+						<div
+							class="fw-semibold text-gray-600 fs-7"
+							bis_skin_checked="1"
+						>
+							QUID:
+						</div>
+
+						<div
+							class="fw-bold text-gray-800 fs-6"
+							bis_skin_checked="1"
+						>
+							{{ transactionResponse.quid }}
+						</div>
+					</div>
+					<!--end::Item-->
+
+					<div class="mb-6" bis_skin_checked="1">
+						<div
+							class="fw-semibold text-gray-600 fs-7"
+							bis_skin_checked="1"
+						>
+							Transaction ID:
+						</div>
+
+						<div
+							class="fw-bold fs-6 text-gray-800 d-flex align-items-center"
+							bis_skin_checked="1"
+						>
+							{{ transactionResponse.transactionId }}
+						</div>
+					</div>
+
+					<!--begin::Item-->
+					<div class="mb-15" bis_skin_checked="1">
+						<div
+							class="fw-semibold text-gray-600 fs-7"
+							bis_skin_checked="1"
+						>
+							Transaction Date:
+						</div>
+
+						<div
+							class="fw-bold fs-6 text-gray-800 d-flex align-items-center"
+							bis_skin_checked="1"
+						>
+							{{ transactionResponse.timestamp }}
+
+							<span
+								class="fs-7 text-success d-flex align-items-center"
+							>
+								<span
+									class="bullet bullet-dot bg-danger mx-2"
+								></span>
+
+								{{
+									moment(
+										transactionResponse.timestamp
+									).fromNow()
+								}}
+							</span>
+						</div>
+					</div>
+					<!--end::Item-->
+
+					<!--begin::Title-->
+					<h6 class="mb-2 fw-bolder text-gray-600 text-hover-primary">
+						Seamlessly withdraw access funds with the Quiika Pay
+						Unique ID (QUID)
+					</h6>
+					<!--end::Title-->
+					<div
+						class="fw-bold fs-6 text-gray-800"
+						bis_skin_checked="1"
+					>
+						<a href="#" class="link-primary ps-1"
+							>Withdraw to local bank account</a
+						>
 					</div>
 				</div>
 			</div>

@@ -1,4 +1,6 @@
 <script setup>
+import QuiikaLogo from './QuiikaLogo.vue';
+
 	const config = useRuntimeConfig().public;
 </script>
 
@@ -16,7 +18,7 @@
 					<div
 						class="d-flex flex-row align-items-center justify-content-center m-0 mb-3"
 					>
-						<NFTexLogo :classes="'h-70px'" />
+						<QuiikaLogo :classes="'h-70px'" />
 					</div>
 				</div>
 				<p class="text-center p-4">

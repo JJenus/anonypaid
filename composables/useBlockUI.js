@@ -11,6 +11,15 @@ export function useBlockUI(targetId) {
 		}
 	};
 
+	const releaseBtn = () => {
+		const closeButton = document.querySelector("#blockui-close-btn-kt");
+		if (closeButton) {
+			closeButton.addEventListener("click", () => {
+				toggleBlock();
+			});
+		}
+	};
+
 	onMounted(() => {
 		const target = document.querySelector(`#${targetId}`);
 		if (target) {
@@ -26,17 +35,15 @@ export function useBlockUI(targetId) {
                 `,
 			});
 
+			blockUI.value.on("kt.blockui.block", function () {
+				console.log("before block");
+				releaseBtn();
+			});
+
 			// Manually attach a click event listener to the button
 			setTimeout(() => {
-				const closeButton = document.querySelector(
-					"#blockui-close-btn-kt"
-				);
-				if (closeButton) {
-					closeButton.addEventListener("click", () => {
-						toggleBlock();
-					});
-				}
-			}, 3000);
+				releaseBtn();
+			}, 4000);
 		}
 	});
 
