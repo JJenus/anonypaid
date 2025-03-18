@@ -20,9 +20,9 @@ export default defineNuxtConfig({
 		},
 	},
 	runtimeConfig: {
-		BE_API: process.env.BE_API || "https://nftex.alwaysdata.neti",
+		BE_API: process.env.BE_API || "https://quiika.alwaysdata.neti",
 		public: {
-			BE_API: process.env.BE_API || "https://nftex.alwaysdata.neti",
+			BE_API: process.env.BE_API || "https://quiika.alwaysdata.neti",
 			APP: "Quiika",
 			CLOUD_NAME: "dofakovum",
 			CLOUD_KEY: "989922725678128",
@@ -46,37 +46,39 @@ export default defineNuxtConfig({
 				{
 					name: "twitter:card",
 					content:
-						"Explore a diverse collection of non-fungible tokens (NFTs) on our platform. From digital art to collectibles, find one-of-a-kind assets created by talented artists and creators. Buy, sell, and trade NFTs securely and easily.",
+						"Quiika enables seamless and secure monetary transactions, allowing users to send gifts, transfer funds, and access money effortlessly using the innovative QUID system. Experience fast, reliable, and inclusive financial solutions.",
 				},
 				{
 					name: "twitter:title",
-					content: "AnonyPaid",
+					content: "Quiika - Send and Access Funds Effortlessly",
 				},
 				{
 					name: "twitter:description",
 					content:
-						"Explore a diverse collection of non-fungible tokens (NFTs) on our platform. From digital art to collectibles, find one-of-a-kind assets created by talented artists and creators. Buy, sell, and trade NFTs securely and easily.",
+						"Quiika empowers individuals and businesses to send and receive funds securely and efficiently. With our unique QUID system, you can access your money anytime, anywhere. Join us and experience the future of financial transactions.",
 				},
 				{
 					name: "twitter:image",
-					content: "https://www.nftexweb.com/assets/media/logos/nftex-logo.png",
+					content:
+						"https://www.quiika.com/assets/media/logos/quiika-logo.png", // Replace with your actual logo URL
 				},
 				{
 					property: "og:title",
-					content: "AnonyPaid",
+					content: "Quiika - Send and Access Funds Effortlessly",
 				},
 				{
 					property: "og:description",
 					content:
-						"Explore a diverse collection of non-fungible tokens (NFTs) on our platform. From digital art to collectibles, find one-of-a-kind assets created by talented artists and creators. Buy, sell, and trade NFTs securely and easily.",
+						"Quiika is a platform designed to simplify monetary transactions. Send gifts, transfer funds, and access your money securely using the QUID system. Fast, reliable, and built for everyone.",
 				},
 				{
 					property: "og:image",
-					content: "https://www.nftexweb.com/assets/media/logos/nftex-logo.png",
+					content:
+						"https://www.quiika.com/assets/media/logos/quiika-logo.png", // Replace with your actual logo URL
 				},
 				{
 					property: "og:url",
-					content: "https://nftexweb.com",
+					content: "https://www.quiika.com", // Replace with your actual domain
 				},
 			],
 			script: [

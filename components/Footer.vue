@@ -1,77 +1,81 @@
 <script setup>
-import QuiikaLogo from './QuiikaLogo.vue';
+	import QuiikaLogo from "./QuiikaLogo.vue";
 
 	const config = useRuntimeConfig().public;
 </script>
 
 <template>
 	<!--begin::Footer container-->
-	<!-- -->
 	<div
-		style="border-radius: 0"
 		class="app-container card container-fluid fs-5 pt-10 mt-10 py-3"
+		style="border-radius: 0"
 	>
-		<div class="row row-cols-md-2 justify-content-between">
-			<!--begin::Copyright-->
-			<div class="col-md-4 order-2w p-0 m-0 order-md-1w pb-8">
-				<div class="d-flex flex-column align-itemis-center mb-6">
+		<div class="row row-cols-1 row-cols-md-2 g-5 justify-content-between">
+			<!--begin::About Section-->
+			<div class="col-md-4 order-2 order-md-1">
+				<div class="d-flex flex-column align-items-center mb-6">
 					<div
-						class="d-flex flex-row align-items-center justify-content-center m-0 mb-3"
+						class="d-flex flex-row align-items-center justify-content-center mb-3"
 					>
-						<QuiikaLogo :classes="'h-70px'" />
+						<QuiikaLogo :classes="'h-50px'" :text-class="'mt-3'" />
 					</div>
+					<p class="text-center p-4">
+						At <strong>Quiika</strong>, we empower individuals and
+						businesses to send and receive funds effortlessly,
+						fostering financial inclusion and enabling seamless
+						transactions across diverse communities. Our innovative
+						QUID system ensures secure, fast, and reliable access to
+						funds, helping build a more connected and equitable
+						financial ecosystem.
+					</p>
 				</div>
-				<p class="text-center p-4">
-					Our business and philanthropy are helping build more
-					sustainable, diverse and equitable communities around the
-					world.
-				</p>
-				<!--end::Page title-->
 			</div>
-			<!--end::Copyright-->
+			<!--end::About Section-->
+
+			<!--begin::Stay Informed Section-->
 			<div class="col-md-5">
-				<h2 class="fs-2qx text-danger mb-2">Stay informed</h2>
-				<p>
-					Reach us on
-					<br />
-					+1 (228) 888-1615
+				<h2 class="fs-2qx text-danger mb-4">Stay Informed</h2>
+				<p class="mb-3">
+					Reach us on <br />
+					<strong>+1 (228) 888-1615</strong>
 				</p>
-				<p class="mb-5">
-					Don’t miss, to subscribe to our new feeds, kindly fill the
-					form below.
+				<p class="mb-4">
+					Don’t miss out! Subscribe to our newsletter for updates.
 				</p>
 				<div class="d-flex align-items-center">
-					<div
-						class="position-relative my-1 me-3"
-						bis_skin_checked="1"
-					>
+					<div class="position-relative me-3 flex-grow-1">
 						<i
 							class="ki-outline ki-sms fs-3 position-absolute top-50 translate-middle-y ms-4"
 						></i>
 						<input
-							type="text"
-							data-kt-table-widget-4="search"
-							class="form-control w-200px w-lg-300px ps-12"
-							placeholder="Email"
+							type="email"
+							class="form-control w-100 ps-12"
+							placeholder="Enter your email"
+							aria-label="Email"
 						/>
 					</div>
-					<button class="btn btn-light-danger">Subscribe</button>
+					<button class="btn btn-danger">Subscribe</button>
 				</div>
 			</div>
+			<!--end::Stay Informed Section-->
 		</div>
 
+		<!--begin::Footer Bottom-->
 		<div
-			class="d-flex flex-column flex-md-row mt-9 align-items-center justify-content-between"
+			class="d-flex flex-column flex-md-row mt-9 align-items-center justify-content-between border-top pt-4"
 		>
-			<div class="px-md-2 fs-6">
+			<!--begin::Copyright-->
+			<div class="px-md-2 fs-6 text-center text-md-start">
 				<span
-					>Copyright © 2023 {{ config.APP }}. all rights
+					>Copyright © 2023 {{ config.APP }}. All rights
 					reserved.</span
 				>
 			</div>
-			<!--begin::Menu-->
+			<!--end::Copyright-->
+
+			<!--begin::Footer Links-->
 			<ul
-				class="menu menu-gray-600 menu-hover-primary fw-semibold order-1w"
+				class="menu menu-gray-600 menu-hover-primary fw-semibold d-flex flex-wrap justify-content-center gap-3 mt-3 mt-md-0"
 			>
 				<li class="menu-item">
 					<NuxtLink
@@ -81,21 +85,20 @@ import QuiikaLogo from './QuiikaLogo.vue';
 						>About</NuxtLink
 					>
 				</li>
-
 				<li class="menu-item">
-					<NuxtLink to="/resources/contact-us" class="menu-link px-2">
-						Contact Us
-					</NuxtLink>
+					<NuxtLink to="/resources/contact-us" class="menu-link px-2"
+						>Contact Us</NuxtLink
+					>
 				</li>
-
 				<li class="menu-item">
-					<a target="_blank" class="menu-link px-2"
-						>Term and conditions</a
+					<a href="#" target="_blank" class="menu-link px-2"
+						>Terms and Conditions</a
 					>
 				</li>
 			</ul>
-			<!--end::Menu-->
+			<!--end::Footer Links-->
 		</div>
+		<!--end::Footer Bottom-->
 	</div>
 	<!--end::Footer container-->
 </template>

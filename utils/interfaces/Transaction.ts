@@ -3,6 +3,7 @@ export enum TransactionStatus {
 	"COMPLETED" = "COMPLETED",
 	"FAILED" = "FAILED",
 	"CANCELLED" = "CANCELLED",
+	"SUCCESS" = "SUCCESS",
 } // Add other statuses as needed
 
 // interface Transaction {

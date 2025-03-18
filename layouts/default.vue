@@ -1,17 +1,10 @@
 <script setup>
-	const config = useRuntimeConfig().public;
-	useCollections();
-
 	if (process.client) {
 		KTThemeMode.setMode("light");
 	}
-	const route = useRoute();
-	console.log();
-	const user = userData().data;
 
 	const loaded = useCookie("reload", { maxAge: 60 * 60 * 24 });
 	loaded.value = false;
-	const showNav = ref(false);
 
 	onMounted(() => {
 		if (process.client) {
@@ -57,9 +50,7 @@
 								id="kt_app_content"
 								class="app-content flex-column-fluid"
 							>
-								<div
-]									class="mb-3 container"
-								>
+								<div ] class="mb-3 container">
 									<!-- <Navbar /> -->
 								</div>
 
@@ -94,10 +85,11 @@
 			<i class="ki-outline ki-arrow-up"></i>
 		</div>
 		<!--end::Scrolltop-->
-		<LoginMenu />
+		<!-- CHECK OTHER THEMES TO IMPLEMENT NAVS IF NEEDED -->
+		<!-- <LoginMenu /> -->
 
 		<!--begin::View component-->
-		<MobileNav class="d-lg-none" />
+		<!-- <MobileNav class="d-lg-none" /> -->
 		<!--end::View component-->
 	</div>
 </template>

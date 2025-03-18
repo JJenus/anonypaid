@@ -3,7 +3,7 @@
 <template>
 	<div class="container-fluid">
 		<div class="d-flex justify-content-center">
-			<div class="card h-xl-100" bis_skin_checked="1">
+			<div class="card min-h-md-600px min-w-md-700px" bis_skin_checked="1">
 				<!--begin::Header-->
 				<div
 					class="card-header position-relative min-h-50px p-0 border-bottom-2"

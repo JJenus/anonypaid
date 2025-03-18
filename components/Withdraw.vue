@@ -1,16 +1,14 @@
 <script setup lang="ts">
 	import { ref, onMounted } from "vue";
+	import axios from "axios";
+	import Cleave from "vue-cleave-component";
+
 	import { useBlockUI } from "~/composables/useBlockUI";
 	import type { EventMessage } from "~/utils/interfaces/EventMessage";
 	import {
 		TransactionStatus,
 		type Transaction,
-		type TransactionResponse,
 	} from "~/utils/interfaces/Transaction";
-
-	import axios from "axios";
-	import Cleave from "vue-cleave-component";
-	import moment from "moment";
 	import type { Bank } from "~/utils/interfaces/Bank";
 
 	const CONFIG = useRuntimeConfig().public;
@@ -29,9 +27,9 @@
 		bankName: "",
 	});
 
-	const showForm = ref(true);
+	const showForm = ref(false);
 	const banks = ref<Bank[]>([]);
-	const transactionResponse = ref<Transaction | null>(null);
+	const quidResponse = ref<Transaction | null>(null);
 
 	const { toggleBlock } = useBlockUI("withdrawal-form");
 
@@ -58,17 +56,19 @@
 
 	// Verify QUID
 	const verifyQuid = async () => {
-		if (!form.value.quid) return;
+		if (!form.value.quid) {
+			return;
+		}
 
 		try {
 			loader.value.verifyingQuid = true;
 			const response = await axios.get<Transaction>(
 				`${API}/transactions/verify/${form.value.quid}`
 			);
-			transactionResponse.value = response.data;
+			quidResponse.value = response.data;
 			console.log(response.data);
 			form.value.amount = formatFractionalCurrency(
-				transactionResponse.value.amount
+				quidResponse.value.amount
 			);
 
 			showForm.value = true; // Show withdrawal form after successful verification
@@ -106,6 +106,7 @@
 
 			if (response.status === 200) {
 				console.log("Withdrawal request submitted successfully!");
+				successAlert(response.data.message || "Withdrawal Processed");
 				// showForm.value = false; // Hide form after successful submission
 			}
 		} catch (error) {
@@ -124,13 +125,6 @@
 
 <template>
 	<div>
-		<div class="text-centeri mb-5 ps-8 ps-md-12">
-			<h1 class="display-6">
-				<span class="text-success">Withdraw</span> Funds
-			</h1>
-			<h6 class="text-muted">Transfer funds to your bank account.</h6>
-		</div>
-
 		<!--begin::Card-->
 		<div
 			id="withdrawal-form"
@@ -138,18 +132,29 @@
 		>
 			<!--begin::Body-->
 			<div
-				v-if="showForm"
-				class="card-body d-flex align-items-center justify-content-center flex-wrap ps-xl-15 pe-0"
+				class="card-body d-flex align-items-center justify-content-center flex-wrap ps-xl-15 pe-0 gap-8 gap-md-10"
 			>
 				<!--begin::Wrapper-->
-				<div class="flex-grow-1 mt-2 me-9 me-md-6 mb-8">
+				<div class="flex-grow-1 mt-2 me-auto mb-8">
+					<div class="text-centeri mb-10">
+						<h1 class="display-6">
+							<span class="text-success">Withdraw</span> Funds
+						</h1>
+						<h6 class="text-muted">
+							Transfer funds to your bank account.
+						</h6>
+					</div>
 					<div
-						class="position-relative text-gray-800 fs-2 z-index-2 fw-bold mb-5"
+						class="position-relative text-gray-800 fs-2 z-index-2 fw-bold mb-5 d-none"
 					>
 						Withdraw Funds
 					</div>
 
-					<form @submit.prevent="submitWithdrawal" class="h-100">
+					<form
+						v-if="!showForm"
+						@submit.prevent="verifyQuid"
+						class="h-100"
+					>
 						<!-- QUID Verification -->
 						<div class="mb-5">
 							<label
@@ -165,11 +170,75 @@
 								v-model="form.quid"
 								class="form-control form-control-solid form-control-lg"
 								placeholder="Enter QUID"
-								@blur="verifyQuid"
 							/>
 							<small class="text-muted">
 								Enter your QUID to verify and proceed.
 							</small>
+						</div>
+
+						<button
+							:disabled="loader.verifyingQuid"
+							class="btn btn-primary w-100"
+						>
+							<span v-if="!loader.verifyingQuid"> Submit </span>
+							<span v-else>
+								verifying...
+								<span
+									class="spinner-border spinner-border-sm"
+								></span>
+							</span>
+						</button>
+					</form>
+
+					<form
+						v-else-if="
+							quidResponse?.status === TransactionStatus.SUCCESS
+						"
+						@submit.prevent="submitWithdrawal"
+						class="h-100"
+					>
+						<div class="mb-5">
+							<label
+								for="quid"
+								class="form-label required fw-bold"
+							>
+								QUID
+							</label>
+							<input
+								disabled
+								type="text"
+								id="quid"
+								name="quid"
+								v-model="form.quid"
+								class="form-control form-control-solidi form-control-lg"
+								placeholder="Enter QUID"
+							/>
+							<small class="text-muted"> Verified QUID. </small>
+						</div>
+
+						<!-- Amount -->
+						<div class="mb-5">
+							<label
+								for="amount"
+								class="form-label required fw-bold"
+							>
+								Amount
+							</label>
+							<cleave
+								disabled
+								type="text"
+								name="amount"
+								class="form-control disabled form-control-solidi form-control-lg text-center fw-bold"
+								:options="{
+									numeral: true,
+									numeralThousandsGroupStyle: 'thousand',
+									numeralDecimalMark: '.',
+									numeralDecimalScale: 2,
+									numeralIntegerScale: 15,
+								}"
+								placeholder="Enter amount"
+								v-model="form.amount"
+							/>
 						</div>
 
 						<!-- Account Name -->
@@ -242,31 +311,6 @@
 							</select>
 						</div>
 
-						<!-- Amount -->
-						<div class="mb-5">
-							<label
-								for="amount"
-								class="form-label required fw-bold"
-							>
-								Amount
-							</label>
-							<cleave
-								disabled
-								type="text"
-								name="amount"
-								class="form-control disabled form-control-solid form-control-lg text-center fw-bold"
-								:options="{
-									numeral: true,
-									numeralThousandsGroupStyle: 'thousand',
-									numeralDecimalMark: '.',
-									numeralDecimalScale: 2,
-									numeralIntegerScale: 15,
-								}"
-								placeholder="Enter amount"
-								v-model="form.amount"
-							/>
-						</div>
-
 						<!-- Submit Button -->
 						<button
 							:disabled="loader.processing"
@@ -283,6 +327,20 @@
 					</form>
 				</div>
 				<!--end::Wrapper-->
+
+				<!--begin::Illustration-->
+		
+
+				<div class="h-175px me-auto">
+					<i class="ki-duotone ki-shield-tick text-primary" style="font-size: 13rem;">
+						<span class="path1"></span>
+						<span class="path2"></span>
+						<span class="path3"></span>
+						<span class="path4"></span>
+						<span class="path5"></span>
+					</i>
+				</div>
+				<!--end::Illustration-->
 			</div>
 			<!--end::Body-->
 		</div>

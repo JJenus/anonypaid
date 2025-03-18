@@ -88,14 +88,19 @@
 
 				transactionResponse.value = sseData.message;
 
-				if (
-					sseData.event === "PAYMENT" &&
-					sseData.message.status === TransactionStatus.COMPLETED
-				) {
-					// Handle successful payment
-					alert("Payment successful!");
-					eventSource.close();
-				}
+				const status = sseData.message.status.toLocaleLowerCase();
+
+				successAlert("Transaction " + status);
+				eventSource.close();
+
+				// if (
+				// 	sseData.event === "PAYMENT" &&
+				// 	sseData.message.status === TransactionStatus.COMPLETED
+				// ) {
+				// 	// Handle successful payment
+				// 	alert("Payment successful!");
+				// 	eventSource.close();
+				// }
 			};
 
 			eventSource.onerror = (error) => {
@@ -139,18 +144,12 @@
 	};
 
 	onMounted(() => {
-		toggleBlock();
+		// toggleBlock();
 	});
 </script>
 
 <template>
 	<div>
-		<div class="text-centeri mb-5 ps-10 ps-md-12">
-			<h1 class="display-6">
-				<span class="text-success">Gift</span> easy
-			</h1>
-			<h6 class="text-muted">Be anonymous.</h6>
-		</div>
 		<!--begin::Card-->
 		<div
 			id="tokenize-form"
@@ -159,10 +158,16 @@
 			<!--begin::Body-->
 			<div
 				v-if="showForm"
-				class="card-body d-flex align-items-center justify-content-center flex-wrap ps-xl-15 pe-0"
+				class="card-body d-flex align-items-center justify-content-center flex-wrap ps-xl-15 pe-0 gap-8 gap-md-10"
 			>
 				<!--begin::Wrapper-->
 				<div class="flex-grow-1 mt-2 me-9 me-md-6 mb-8">
+					<div class="mb-5">
+						<h1 class="display-6">
+							<span class="text-success">Gift</span> easy
+						</h1>
+						<h6 class="text-muted">Be anonymous.</h6>
+					</div>
 					<div
 						class="position-relative text-gray-800 fs-2 z-index-2 fw-bold mb-5"
 					>
@@ -232,7 +237,7 @@
 				<!--begin::Illustration-->
 				<img
 					src="/assets/media/illustrations/misc/credit-card.png"
-					class="h-175px me-15"
+					class="h-175px me-auto"
 					alt=""
 				/>
 				<!--end::Illustration-->

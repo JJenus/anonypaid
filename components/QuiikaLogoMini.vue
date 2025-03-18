@@ -28,7 +28,7 @@
 	>
 		<img
 			alt="Logo"
-			src="/assets/media/logos/nftex-logo.png"
+			src="/assets/media/logos/quiika-logo.png"
 			:class="classes"
 			class=""
 		/>

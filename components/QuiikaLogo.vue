@@ -1,18 +1,9 @@
 <script setup lang="ts">
-	const props = defineProps({
-		classes: {
-			type: String,
-			required: false,
-		},
-		appClass: {
-			type: String,
-			required: false,
-		},
-		appClassDark: {
-			type: String,
-			required: false,
-		},
-	});
+	defineProps<{
+		classes: string;
+		appClass: string;
+		textClass: string;
+	}>();
 
 	const { APP } = useRuntimeConfig().public;
 	console.log(APP);
@@ -26,9 +17,18 @@
 	<a href="/" class="d-flex algin-items-center gap-3 justify-content-center">
 		<img
 			alt="Logo"
-			src="/assets/media/logos/nftex-logo.png"
+			src="/assets/media/logos/quiika-logo.png"
 			:class="classes"
 		/>
-		<span class="fw-bold fs-1 text-white mt-3">{{ APP }}</span>
+		<span
+			:class="textClass"
+			class="fw-bold theme-dark-show fs-1 text-white mt-2"
+			>{{ APP }}</span
+		>
+		<span
+			:class="textClass"
+			class="fw-bold theme-light-show fs-1 text-primary mt-2"
+			>{{ APP }}</span
+		>
 	</a>
 </template>
