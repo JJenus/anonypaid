@@ -85,11 +85,10 @@ export default defineNuxtConfig({
 				},
 			],
 			script: [
-				{ src: "/assets/plugins/global/plugins.bundle.js", body: true },
-				{ src: "/assets/js/scripts.bundle.js", body: true },
+				{ src: "/assets/plugins/global/plugins.bundle.js" },
+				{ src: "/assets/js/scripts.bundle.js" },
 				{
 					src: "/assets/plugins/custom/fslightbox/fslightbox.bundle.js",
-					body: true,
 				},
 			],
 
