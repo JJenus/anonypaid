@@ -1,10 +1,10 @@
 # Nuxt dev/build outputs
-.output
+# .output
 .data
 .nuxt
 .nitro
 .cache
-.vercel
+# .vercel
 dist
 
 # Node dependencies
