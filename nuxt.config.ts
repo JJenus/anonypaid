@@ -1,5 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+	nitro: {
+		preset: "vercel", // Ensure this is set correctly
+	},
 	modules: ["nuxt-swiper", "@nuxt/image"],
 	devtools: { enabled: false },
 	ssr: true,
