@@ -9,7 +9,7 @@
 
 	const handleError = () => {
 		clearError();
-		window.location.href = "/";
+		navigateTo("/");
 	};
 </script>
 
