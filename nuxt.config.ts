@@ -20,9 +20,9 @@ export default defineNuxtConfig({
 		},
 	},
 	runtimeConfig: {
-		BE_API: process.env.BE_API || "https://quiika.alwaysdata.neti",
+		BE_API: process.env.BE_API || "https://quiika.alwaysdata.net",
 		public: {
-			BE_API: process.env.BE_API || "https://quiika.alwaysdata.neti",
+			BE_API: process.env.BE_API || "https://quiika.alwaysdata.net",
 			APP: "Quiika",
 			CLOUD_NAME: "dofakovum",
 			CLOUD_KEY: "989922725678128",
