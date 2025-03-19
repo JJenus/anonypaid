@@ -23,6 +23,8 @@
 	const amount = ref("");
 	const showForm = ref(true);
 
+	const eventSource = ref<EventSource | null>();
+
 	const transactionResponse = ref<TransactionResponse | null>({
 		quid: "TZIOMSUY",
 		currency: "NGN",
@@ -44,6 +46,48 @@
 		const is = inputAmount > 100_000;
 
 		return is;
+	};
+
+	const initSSEListener = (sessionId: string) => {
+		if (eventSource.value) eventSource.value.close();
+
+		// Listen to the SSE
+		eventSource.value = new EventSource(`${API}/sse/connect/${sessionId}`);
+		toggleBlock();
+
+		eventSource.value.onmessage = (event) => {
+			const sseData: EventMessage<TransactionResponse> = JSON.parse(
+				event.data
+			);
+
+			console.log(sseData);
+			loader.value.processing = false;
+			toggleBlock();
+
+			// Hide the form
+			showForm.value = false;
+
+			transactionResponse.value = sseData.message;
+
+			const status = sseData.message.status.toLocaleLowerCase();
+
+			successAlert("Transaction " + status);
+			if (eventSource.value) eventSource.value.close();
+
+			// if (
+			// 	sseData.event === "PAYMENT" &&
+			// 	sseData.message.status === TransactionStatus.COMPLETED
+			// ) {
+			// 	// Handle successful payment
+			// 	alert("Payment successful!");
+			// 	eventSource.close();
+			// }
+		};
+
+		eventSource.value.onerror = (error) => {
+			console.error("SSE error:", error);
+			if (eventSource.value) eventSource.value.close();
+		};
 	};
 
 	const send = async () => {
@@ -68,45 +112,7 @@
 			// Open the Paystack URL in a new tab
 			window.open(data.authorizationUrl, "_blank");
 
-			// Listen to the SSE
-			const eventSource = new EventSource(
-				`${API}/sse/connect/${data.sessionId}`
-			);
-			toggleBlock();
-
-			eventSource.onmessage = (event) => {
-				const sseData: EventMessage<TransactionResponse> = JSON.parse(
-					event.data
-				);
-
-				console.log(sseData);
-				loader.value.processing = false;
-				toggleBlock();
-
-				// Hide the form
-				showForm.value = false;
-
-				transactionResponse.value = sseData.message;
-
-				const status = sseData.message.status.toLocaleLowerCase();
-
-				successAlert("Transaction " + status);
-				eventSource.close();
-
-				// if (
-				// 	sseData.event === "PAYMENT" &&
-				// 	sseData.message.status === TransactionStatus.COMPLETED
-				// ) {
-				// 	// Handle successful payment
-				// 	alert("Payment successful!");
-				// 	eventSource.close();
-				// }
-			};
-
-			eventSource.onerror = (error) => {
-				console.error("SSE error:", error);
-				eventSource.close();
-			};
+			initSSEListener(data.sessionId!);
 		} catch (error) {
 			console.error("There was a problem with the request:", error);
 
@@ -164,7 +170,7 @@
 				<div class="flex-grow-1 mt-2 me-9 me-md-6 mb-8">
 					<div class="mb-5">
 						<h1 class="display-6">
-							<span class="text-success">Gift</span> easy
+							<span class="text-success">Gift</span> Easily
 						</h1>
 						<h6 class="text-muted">Be anonymous.</h6>
 					</div>

@@ -1,16 +1,7 @@
 <script setup>
-	if (process.client) {
-		KTThemeMode.setMode("light");
-	}
+	import { useRoute } from "vue-router";
 
-	const loaded = useCookie("reload", { maxAge: 60 * 60 * 24 });
-	loaded.value = false;
-
-	onMounted(() => {
-		if (process.client) {
-			KTThemeMode.setMode("dark");
-		}
-	});
+	const route = useRoute();
 </script>
 
 <template>
@@ -50,7 +41,7 @@
 								id="kt_app_content"
 								class="app-content flex-column-fluid"
 							>
-								<div ] class="mb-3 container">
+								<div class="mb-3 container">
 									<!-- <Navbar /> -->
 								</div>
 
@@ -84,13 +75,6 @@
 		<div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
 			<i class="ki-outline ki-arrow-up"></i>
 		</div>
-		<!--end::Scrolltop-->
-		<!-- CHECK OTHER THEMES TO IMPLEMENT NAVS IF NEEDED -->
-		<!-- <LoginMenu /> -->
-
-		<!--begin::View component-->
-		<!-- <MobileNav class="d-lg-none" /> -->
-		<!--end::View component-->
 	</div>
 </template>
 

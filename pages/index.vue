@@ -1,9 +1,31 @@
-<script setup></script>
+<!-- pages/index.vue -->
+<script setup>
+	import { ref, watch } from "vue";
+	import { useRoute } from "vue-router";
+
+	const route = useRoute();
+	const activeTab = ref("send"); // Default tab
+
+	// Watch for hash changes
+	watch(
+		() => route.hash, // Watch the hash value in the route
+		(newHash) => {
+			const hash = newHash.replace("#", ""); // Remove the '#' from the hash
+			if (hash === "send" || hash === "claim") {
+				activeTab.value = hash; // Update the active tab
+			}
+		},
+		{ immediate: true } // Trigger the watcher immediately on mount
+	);
+</script>
 
 <template>
 	<div class="container-fluid">
 		<div class="d-flex justify-content-center">
-			<div class="card min-h-md-600px min-w-md-700px" bis_skin_checked="1">
+			<div
+				class="card min-h-md-600px min-w-md-700px"
+				bis_skin_checked="1"
+			>
 				<!--begin::Header-->
 				<div
 					class="card-header position-relative min-h-50px p-0 border-bottom-2"
@@ -17,14 +39,11 @@
 						<!--begin::Item-->
 						<li class="nav-item mx-0 p-0 w-50" role="presentation">
 							<!--begin::Link-->
-							<a
+							<NuxtLink
 								class="nav-link btn btn-color-muted border-0 h-100 px-0"
-								data-bs-toggle="pill"
-								id="kt_forms_widget_1_tab_1"
-								href="#kt_forms_widget_1_tab_content_1"
-								aria-selected="false"
+								:class="{ active: activeTab === 'send' }"
+								to="#send"
 								role="tab"
-								tabindex="-1"
 							>
 								<!--begin::Subtitle-->
 								<span class="nav-text fw-bold fs-4 mb-3">
@@ -37,7 +56,7 @@
 									class="bullet-custom position-absolute z-index-2 w-100 h-2px top-100 bottom-n100 bg-primary rounded"
 								></span>
 								<!--end::Bullet-->
-							</a>
+							</NuxtLink>
 							<!--end::Link-->
 						</li>
 						<!--end::Item-->
@@ -45,12 +64,10 @@
 						<!--begin::Item-->
 						<li class="nav-item mx-0 px-0 w-50" role="presentation">
 							<!--begin::Link-->
-							<a
-								class="nav-link btn btn-color-muted border-0 h-100 px-0 active"
-								data-bs-toggle="pill"
-								id="kt_forms_widget_1_tab_2"
-								href="#kt_forms_widget_1_tab_content_2"
-								aria-selected="true"
+							<NuxtLink
+								class="nav-link btn btn-color-muted border-0 h-100 px-0"
+								:class="{ active: activeTab === 'claim' }"
+								to="#claim"
 								role="tab"
 							>
 								<!--begin::Subtitle-->
@@ -64,7 +81,7 @@
 									class="bullet-custom position-absolute z-index-2 w-100 h-2px top-100 bottom-n100 bg-primary rounded"
 								></span>
 								<!--end::Bullet-->
-							</a>
+							</NuxtLink>
 							<!--end::Link-->
 						</li>
 						<!--end::Item-->
@@ -80,21 +97,19 @@
 						<!--begin::Tap pane-->
 						<div
 							class="tab-pane fade"
-							id="kt_forms_widget_1_tab_content_1"
+							:class="{ 'active show': activeTab === 'send' }"
 							role="tabpanel"
-							aria-labelledby="kt_forms_widget_1_tab_1"
 							bis_skin_checked="1"
 						>
-							<MakePayment></MakePayment>
+							<MakePayment />
 						</div>
 						<!--end::Tap pane-->
 
 						<!--begin::Tap pane-->
 						<div
-							class="tab-pane fade active show"
-							id="kt_forms_widget_1_tab_content_2"
+							class="tab-pane fade"
+							:class="{ 'active show': activeTab === 'claim' }"
 							role="tabpanel"
-							aria-labelledby="kt_forms_widget_1_tab_2"
 							bis_skin_checked="1"
 						>
 							<Withdraw />

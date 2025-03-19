@@ -37,7 +37,7 @@
 				<h2 class="fs-2qx text-danger mb-4">Stay Informed</h2>
 				<p class="mb-3">
 					Reach us on <br />
-					<strong>+1 (228) 888-1615</strong>
+					<strong>support@quiika.com</strong>
 				</p>
 				<p class="mb-4">
 					Don’t miss out! Subscribe to our newsletter for updates.
